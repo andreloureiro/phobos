@@ -1,0 +1,125 @@
+html, body {
+  height: 100%;
+  margin: 0px;
+}
+#app {
+  display: flex;
+  height: 100%;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.title {
+  margin: 0.4rem 0 0.4rem 0.4rem;
+}
+button, select, input {
+  box-sizing: border-box;
+  margin: 0.1rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  outline: none;
+}
+input, select {
+  width: 100%;
+}
+.nav {
+  display: flex;
+  margin: 0 0.4rem;
+  padding: 0;
+}
+.nav__item {
+  padding: 0.4rem 0.8rem 0.4rem 0;
+  list-style-type: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.nav__item--active {
+  border-bottom: 2px solid black;
+}
+.content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-box-container {
+  display: flex;
+  width: 10rem;
+  flex-direction: column;
+  text-align: center;
+}
+.toggle-transition {
+  margin-bottom: 1rem;
+}
+.toggle-duration {
+  margin-bottom: 1rem;
+}
+.toggle-box {
+  width: 10rem;
+  height: 10rem;
+}
+
+
+.square-list {
+  transition: all linear 1s;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+}
+.square-list .square-list__item {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.2rem;
+  background-color: orange;
+}
+
+.custom-animation {
+  width: 6rem;
+  height: 6rem;
+}
+.custom-animation__circle {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: pink;
+  opacity: 0;
+}
+.custom-animation__heart {
+  width: 6rem;
+  height: 6rem;
+  background: url(../img/heart.svg) no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  -webkit-filter: grayscale(100%);
+}
+.custom-animation__heart.custom-animation__heart--active {
+  -webkit-filter: none;
+}
+
+.custom-transition {
+  width: 10rem;
+  height: 15rem;
+  text-align: center;
+}
+.custom-transition__list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.custom-transition__list .list__item {
+  padding: 0.5rem;
+  list-style-type: none;
+  opacity: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
