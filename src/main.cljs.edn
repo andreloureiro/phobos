@@ -1,0 +1,3 @@
+{:require [phobos.example]
+ :init-fns [phobos.example/mount!]
+ :compiler-options {}}
