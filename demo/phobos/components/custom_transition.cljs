@@ -93,10 +93,10 @@
                   {:easing "ease-out"
                    :display "block"}]]})})
 
-(defn team [team]
-  [:li.list__item {:key (:id team)
-                   :style {:background-color (:bg team)
-                           :color (:fg team)}} (:name team)])
+(defn team [{:keys [id bg fg name]}]
+  [:li.list__item {:key id
+                   :style {:background-color bg
+                           :color fg}} name])
 
 (defn add-item [teams item-count]
   (swap! item-count inc)

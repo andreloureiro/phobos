@@ -24,8 +24,7 @@
         {:animation (when @fav? (get heart-animation :explosion))
          :run-on-mount true}
         [:div.custom-animation__circle
-         {:style {:position "absolute"}}
-         ]]
+         {:style {:position "absolute"}}]]
        [p/motion-component
         {:animation (when @fav? (get heart-animation :heart))
          :run-on-mount true}

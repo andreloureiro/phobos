@@ -30,11 +30,6 @@
    {:id 3
     :view custom-transition}])
 
-(defn make-view [state]
-  (fn [view]
-    (if (= @state (:id view))
-      ^{:key (:id view)}[(:view view)])))
-
 (defn examples []
   (let [state (r/atom 0)]
     (fn []
@@ -42,12 +37,12 @@
        [:h1.title "Phobos Examples"]
        [:ul.nav
         (doall
-         (for [item nav-items]
-           [:li {:key (:id item)
-                 :on-click #(reset! state (:id item))
-                 :class-name (if (= @state (:id item))
+         (for [{:keys [id title]} nav-items]
+           [:li {:key id
+                 :on-click #(reset! state id)
+                 :class-name (if (= @state id)
                                "nav__item nav__item--active"
-                               "nav__item")} (:title item)]))]
+                               "nav__item")} title]))]
        [p/motion-group
         {:component "div"
          :class-name "content"
