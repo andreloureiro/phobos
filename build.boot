@@ -98,6 +98,6 @@
         (build-cljs)
         (target)))
 
-(deftask push-clojars []
+(deftask deploy-snapshot []
   (comp (build-jar)
         (push-snapshot)))
