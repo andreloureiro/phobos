@@ -41,32 +41,6 @@
       :description "A ClojureScript wrapper to use Velocity React in Reagent apps."
       :license {"Eclipse Public License" "http://www.eclipse.org/legal/epl-v10.html"}})
 
-(deftask dev []
-  (set-env! :source-paths #{"src" "demo"})
-  (comp (serve :dir "static")
-        (watch)
-        (speak)
-        (reload :on-jsload 'phobos.example/mount!)
-        (cljs-repl)
-        (cljs :compiler-options {:closure-defines {"goog.DEBUG" false}
-                                 :source-map :true
-                                 :optimizations :none
-                                 :source-map-timestamp true
-                                 :foreign-libs [{:file "lib/velocity/animate.js"
-                                                 :provides ["velocity-animate"]}
-                                                {:file "lib/velocity/react.js"
-                                                 :provides ["velocity-react"]}
-                                                {:file "lib/velocity/ui.js"
-                                                 :provides ["velocity-ui"]
-                                                 :requires ["velocity-animate"]}]})))
-
-(deftask version-file []
-  (with-pre-wrap [fileset]
-    (boot.util/info "Add version properties...\n")
-    (-> fileset
-        (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
-        commit!)))
-
 (def foreign-libs
   [{:file "lib/velocity/animate.js"
     :file-min "lib/velocity/animate.min.js"
@@ -78,6 +52,26 @@
     :file-min "lib/velocity/ui.min.js"
     :provides ["velocity-ui"]
     :requires ["velocity-animate"]}])
+
+(deftask dev []
+  (set-env! :source-paths #{"src" "demo"})
+  (comp (serve :dir "static")
+        (watch)
+        (speak)
+        (reload :on-jsload 'phobos.example/mount!)
+        (cljs-repl)
+        (cljs :compiler-options {:closure-defines {"goog.DEBUG" false}
+                                 :source-map :true
+                                 :optimizations :none
+                                 :source-map-timestamp true
+                                 :foreign-libs foreign-libs})))
+
+(deftask version-file []
+  (with-pre-wrap [fileset]
+    (boot.util/info "Add version properties...\n")
+    (-> fileset
+        (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
+        commit!)))
 
 (deftask build-cljs []
   (cljs :optimizations :advanced
@@ -93,11 +87,13 @@
    (build-cljs)))
 
 (deftask build []
-  (merge-env! :source-paths #{"src" "demo"} :resource-paths #{"static"})
+  (merge-env! :source-paths #{"src"})
   (comp (version-file)
         (build-cljs)
-        (target)))
+        (target)
+        (build-jar)))
 
 (deftask deploy-snapshot []
+  (merge-env! :source-paths #{"src"})
   (comp (build-jar)
         (push-snapshot)))
