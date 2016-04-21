@@ -12,7 +12,7 @@ See at [http://andreloureiro.github.io/phobos](http://andreloureiro.github.io/ph
 
 ## Usage
 
-First, some attention to your project dependencies. Phobos depends on `cljsjs/react-with-addons` because of the `TransitionGroup` component, so the developer is responsible to choose the React version needed to his project. One should to exclude the `cljsjs/react` dependency from `reagent`, and add the proper `cljsjs/react-with-addons` version:
+First, some attention to your project dependencies. Phobos depends on `cljsjs/react-with-addons` because of the `TransitionGroup` component, so the developer is responsible to choose the React version needed to the project. One should exclude the `cljsjs/react` dependency from `reagent`, and add the proper `cljsjs/react-with-addons` version:
 
 ```clj
   [reagent "0.6.0-alpha" :exclusions [cljsjs/react]]
