@@ -20,7 +20,7 @@
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.40"]
                  [reagent "0.6.0-alpha" :exclusions [cljsjs/react]]
-                 [cljsjs/react-with-addons "15.0.0-0"]
+                 
                  [org.clojure/core.async "0.2.374"]])
 
 (require
@@ -41,6 +41,8 @@
       :description "A ClojureScript wrapper to use Velocity React in Reagent apps."
       :license {"Eclipse Public License" "http://www.eclipse.org/legal/epl-v10.html"}})
 
+(def react-with-addons '[[cljsjs/react-with-addons "15.0.0-0"]])
+
 (def foreign-libs
   [{:file "lib/velocity/animate.js"
     :file-min "lib/velocity/animate.min.js"
@@ -55,6 +57,7 @@
 
 (deftask dev []
   (set-env! :source-paths #{"src" "demo"})
+  (merge-env! :dependencies react-with-addons)
   (comp (serve :dir "static")
         (watch)
         (speak)
@@ -74,26 +77,28 @@
         commit!)))
 
 (deftask build-cljs []
+  (merge-env! :dependencies react-with-addons)
   (cljs :optimizations :advanced
         :compiler-options {:foreign-libs foreign-libs
                            :externs ["externs/phobos_externs.js"]
                            :closure-warnings {:externs-validation :off}}))
 
 (deftask demo []
-  (merge-env! :source-paths #{"src" "demo"} :resource-paths #{"static"})
+  (merge-env! :source-paths #{"src" "demo"}
+              :resource-paths #{"static"}
+              :dependencies react-with-addons)
   (comp
    (serve :dir "static")
    (watch)
    (build-cljs)))
 
 (deftask build []
-  (merge-env! :source-paths #{"src"})
+  (merge-env! :source-paths #{"src"}
+              :dependencies react-with-addons)
   (comp (version-file)
         (build-cljs)
-        (target)
-        (build-jar)))
+        (target)))
 
 (deftask deploy-snapshot []
-  (merge-env! :source-paths #{"src"})
   (comp (build-jar)
         (push-snapshot)))
